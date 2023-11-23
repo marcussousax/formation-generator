@@ -16,7 +16,14 @@ interface MP3PlayerProps {
     setFormations: React.Dispatch<React.SetStateAction<Formation[]>>
 }
 
-interface DancerProps {
+interface SidebarProps {
+    participants: Person[]
+    setParticipants: React.Dispatch<React.SetStateAction<Person[]>>
     formations: Formation[]
     setFormations: React.Dispatch<React.SetStateAction<Formation[]>>
+}
+
+interface DancerProps {
+    participants: Person[]
+    setParticipants: React.Dispatch<React.SetStateAction<Person[]>>
 }
