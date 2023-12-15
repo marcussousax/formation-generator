@@ -1,10 +1,11 @@
 'use client'
-import { MP3PlayerProps } from '@/app/types'
+import { Formation, MP3PlayerProps } from '@/app/types'
+import { generateUniqueId } from '@/app/utils/generateUniqueId'
 import { Box } from '@chakra-ui/react'
 import React from 'react'
 import AudioPlayer from 'react-audio-player'
 
-const MP3Player: React.FC<MP3PlayerProps> = ({ formations, setFormations }) => {
+const MP3Player: React.FC<MP3PlayerProps> = ({ formations, participants, handleTabsChange, setFormations }) => {
     const [currentTime, setCurrentTime] = React.useState(0)
     const audioRef = React.useRef(null)
 
@@ -13,22 +14,30 @@ const MP3Player: React.FC<MP3PlayerProps> = ({ formations, setFormations }) => {
         setCurrentTime(displayTime)
     }
 
-    const createSnapshot = (time: number) => {
-        setFormations([time, ...formations])
+    const createFormation = (time: number) => {
+        const newFormation: Formation = {
+            id: generateUniqueId(),
+            name: `Formation ${formations.length + 1}`,
+            configuration: {
+                time,
+                participants: [...participants]
+            }
+        }
+        setFormations(prevFormations => [...prevFormations, newFormation])
+        handleTabsChange(1)
     }
 
     React.useEffect(() => {
         if (currentTime === 6) {
-            console.log('Formação 1')
+            console.log('Formation 1')
         } else if (currentTime === 10) {
-            console.log('Formação 2')
+            console.log('Formation 2')
         }
     }, [currentTime])
 
     return (
         <Box color={'gray.800'} bg={'white'} borderRadius={'xl'} p={3}>
-            {/* <p>Current Time: {currentTime} seconds</p> */}
-            <button onClick={() => createSnapshot(currentTime)}>Create snapshot</button>
+            <button onClick={() => createFormation(currentTime)}>Create a new formation</button>
             <AudioPlayer
                 ref={audioRef}
                 listenInterval={1000}

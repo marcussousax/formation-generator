@@ -1,14 +1,11 @@
 'use client'
 import { Person, DancerProps } from '@/app/types'
+import { generateUniqueId } from '@/app/utils/generateUniqueId'
 import { EditIcon, CheckIcon, DeleteIcon } from '@chakra-ui/icons'
 import { Button, Table, Tbody, Tr, Td, TableContainer, Input } from '@chakra-ui/react'
 
 import { useDebounce } from '@uidotdev/usehooks'
 import * as React from 'react'
-
-function generateUniqueId() {
-    return Date.now().toString(36) + Math.random().toString(36).substring(2, 7)
-}
 
 const Dancers: React.FC<DancerProps> = ({ participants, setParticipants }) => {
     const [nameValue, setNameValue] = React.useState('')
@@ -61,7 +58,7 @@ const Dancers: React.FC<DancerProps> = ({ participants, setParticipants }) => {
             <TableContainer>
                 <Table size="xs" layout={'fixed'} variant="striped" colorScheme="gray">
                     <Tbody>
-                        {participants?.map(participant => (
+                        {participants.map(participant => (
                             <Tr key={participant.id}>
                                 <Td paddingInline={3} width={'xs'}>
                                     {editingParticipantId === participant.id ? (
